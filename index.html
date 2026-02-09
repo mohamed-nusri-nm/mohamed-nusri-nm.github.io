@@ -173,6 +173,33 @@
             align-items: center;
         }
 
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 0.4rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--cyber-green);
+            transition: var(--transition-smooth);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
         .nav-link {
             color: var(--chrome-shine);
             text-decoration: none;
@@ -931,11 +958,17 @@
             }
 
             .projects-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             }
 
             .hero-metrics {
                 flex-wrap: wrap;
+                gap: 2rem;
+            }
+
+            .metric-box {
+                flex: 1;
+                min-width: 150px;
             }
         }
 
@@ -944,20 +977,64 @@
                 padding: 0 1.5rem;
             }
 
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .brand-name {
+                font-size: 1.1rem;
+            }
+
+            .brand-tagline {
+                font-size: 0.6rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
             .nav-menu {
-                gap: 1.5rem;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(13, 13, 13, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                padding: 2rem;
+                transition: right 0.4s ease;
+                border-left: 1px solid var(--cyber-green);
+            }
+
+            .nav-menu.active {
+                right: 0;
             }
 
             .nav-link {
-                font-size: 0.7rem;
+                font-size: 1rem;
+                padding: 1rem 0;
             }
 
             section {
-                padding: 5rem 1.5rem;
+                padding: 4rem 1.5rem;
             }
 
             .hero {
-                padding: 8rem 1.5rem 6rem;
+                padding: 6rem 1.5rem 4rem;
+                min-height: auto;
+            }
+
+            .hero-title {
+                font-size: clamp(2.5rem, 12vw, 4rem);
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
             }
 
             .hero-metrics {
@@ -965,17 +1042,94 @@
                 gap: 1.5rem;
             }
 
+            .metric-box {
+                width: 100%;
+            }
+
             .hero-cta {
                 flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem 2rem;
             }
 
             .skills-container {
                 grid-template-columns: 1fr;
             }
 
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 2rem;
+            }
+
+            .project-stats {
+                flex-wrap: wrap;
+            }
+
             .status-bar {
-                padding: 0.5rem 1.5rem;
+                padding: 0.5rem 1rem;
                 font-size: 0.6rem;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .section-title {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+
+            .code-float {
+                display: none;
+            }
+
+            .about-layout,
+            .contact-layout {
+                gap: 2rem;
+            }
+
+            .contact-form {
+                order: 1;
+            }
+
+            .contact-methods {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu {
+                width: 85%;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-header {
+                margin-bottom: 3rem;
+            }
+
+            .project-tags {
+                gap: 0.4rem;
+            }
+
+            .project-tag {
+                font-size: 0.65rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .skill-card {
+                padding: 1.5rem;
+            }
+
+            .certs-box {
+                padding: 1.5rem;
             }
         }
 
@@ -1001,15 +1155,20 @@
                 <div class="brand-icon">MN</div>
                 <div class="brand-text">
                     <div class="brand-name">MOHAMED NUSRI</div>
-                    <div class="brand-tagline">Data Science Engineer</div>
+                    <div class="brand-tagline">Data Science Student</div>
                 </div>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
@@ -1020,13 +1179,13 @@
                 <div class="hero-label">Computer Science Student</div>
                 <h1 class="hero-title">
                     <span class="title-line-1">DATA SCIENCE</span>
-                    <span class="title-line-2">& ML ENGINEERING</span>
+                    <span class="title-line-2">& ML LEARNING</span>
                 </h1>
             </div>
             <p class="hero-subtitle">
-                Building intelligent systems through advanced analytics, machine learning algorithms, 
-                and data-driven insights. Transforming complex datasets into actionable solutions 
-                that drive real-world impact.
+                Learning to build intelligent systems through analytics, machine learning, 
+                and data exploration. Developing skills to transform datasets into insights 
+                through hands-on projects and continuous learning.
             </p>
             <div class="hero-metrics">
                 <div class="metric-box">
@@ -1117,8 +1276,8 @@
             <div class="section-tag">Technical Expertise</div>
             <h2 class="section-title">Skills & Tools</h2>
             <p class="section-description">
-                Comprehensive skill set across the entire data science pipeline, from data acquisition 
-                to model deployment and visualization.
+                My growing skill set across the data science pipeline, from data collection 
+                to visualization and basic model building.
             </p>
         </div>
         <div class="skills-container">
@@ -1298,8 +1457,8 @@
             <div class="section-tag">Portfolio</div>
             <h2 class="section-title">Featured Projects</h2>
             <p class="section-description">
-                Showcase of data science projects demonstrating end-to-end ML development, 
-                from research to production deployment.
+                Projects I've built while learning data science, demonstrating practical application 
+                of concepts from data analysis to machine learning.
             </p>
         </div>
         <div class="projects-grid">
@@ -1490,11 +1649,11 @@
         </div>
         <div class="contact-layout">
             <div class="contact-methods">
-                <a href="mailto:Mohamed.nusri.nm@gmail.com" class="contact-card">
+                <a href="/cdn-cgi/l/email-protection#2e6341464f434b4a00405b5d5c470040436e49434f4742004d4143" class="contact-card">
                     <div class="contact-icon">✉</div>
                     <div class="contact-info">
                         <h4>Email</h4>
-                        <p>Mohamed.nusri.nm@gmail.com</p>
+                        <p><span class="__cf_email__" data-cfemail="d499bbbcb5b9b1b0fabaa1a7a6bdfabab994b3b9b5bdb8fab7bbb9">[email&#160;protected]</span></p>
                     </div>
                 </a>
                 <a href="https://github.com/mohamed-nusri-nm" target="_blank" rel="noopener noreferrer" class="contact-card">
@@ -1538,9 +1697,9 @@
         <div class="social-grid">
             <a href="https://github.com/mohamed-nusri-nm" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
             <a href="https://www.linkedin.com/in/mohamed-nusri-nm" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
-            <a href="mailto:Mohamed.nusri.nm@gmail.com" class="social-link">Email</a>
+            <a href="/cdn-cgi/l/email-protection#baf7d5d2dbd7dfde94d4cfc9c8d394d4d7faddd7dbd3d694d9d5d7" class="social-link">Email</a>
         </div>
-        <p class="copyright">© 2026 Mohamed Nusri • Data Science Engineer</p>
+        <p class="copyright">© 2026 Mohamed Nusri • Data Science Student</p>
     </footer>
 
     <!-- Terminal Status Bar -->
@@ -1557,7 +1716,32 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
         // Custom Cursor
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
@@ -1702,16 +1886,4 @@
         function updateTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('en-US', { hour12: false });
-            document.getElementById('current-time').textContent = timeString;
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
-
-        // Window Resize
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
-</body>
-</html>
+            document.getElementById('current-time').te
